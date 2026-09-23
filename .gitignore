@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+logs/*.log
+.pytest_cache/
+config/arena_calibration.npz
+config/arena_background.png
+config/arena_background.json

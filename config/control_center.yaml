@@ -1,0 +1,70 @@
+# Logitech C525 / OpenCV capture. Override index at launch with --camera-index.
+camera_index: 0
+camera_width: 1280
+camera_height: 720
+camera_fps: 30
+camera_backend: dshow
+camera_fourcc: MJPG
+camera_apply_requested_settings: true
+camera_enable_backend_fallbacks: true
+vision_result_max_age_ms: 250
+
+# AprilTag settings retained from april_test.py. Self tag ID may be changed here.
+april_tag_family: DICT_APRILTAG_36h11
+self_tag_id: 0
+
+# World frame: origin is the near-left arena corner; +x right, +y away from camera.
+arena_width_m: 1.15
+arena_height_m: 1.15
+
+# Known arena geometry — physical measurements to fill in.
+# Coordinates in metres from the arena origin (near-left corner, +x right, +y away from camera).
+# TODO-MEASURE: B4 / B5 — measure actual pit positions and flipper vertices from the arena floor.
+arena:
+  width_m: 1.15
+  height_m: 1.15
+  # Click these in order: near-left, near-right, far-right, far-left.
+  calibration_reference_points_m:
+    - [0.0, 0.0]
+    - [1.15, 0.0]
+    - [1.15, 1.15]
+    - [0.0, 1.15]
+  pit_1:
+    x: null        # TODO-MEASURE: pit 1 centre x (metres)
+    y: null        # TODO-MEASURE: pit 1 centre y (metres)
+    radius: null   # TODO-MEASURE: pit 1 radius (metres)
+  pit_2:
+    x: null        # TODO-MEASURE: pit 2 centre x (metres)
+    y: null        # TODO-MEASURE: pit 2 centre y (metres)
+    radius: null   # TODO-MEASURE: pit 2 radius (metres)
+  flipper:
+    vertices: []   # TODO-MEASURE: list of [x, y] pairs in arena metres
+
+vision:
+  rectified_width_px: 700
+  rectified_height_px: 700
+  foreground_threshold: 28
+  morphology_kernel: 5
+  min_candidate_area: 350
+  max_candidate_area: 80000
+  self_exclusion_radius_m: 0.12
+  background_frame_count: 60
+  prediction_timeout_s: 0.5
+  opponent_lost_timeout_s: 1.5
+  max_reprojection_error_px: 8.0
+  calibration_file: config/arena_calibration.npz
+  background_file: config/arena_background.png
+
+april_tag:
+  family: DICT_APRILTAG_36h11
+  tag_size_m: null  # TODO-MEASURE before enabling solvePnP pose
+  camera_matrix: null
+  distortion_coefficients: null
+
+# Camera homography / relocalization.
+# The camera is not assumed to remain permanently fixed.
+# Re-run arena recalibration after any camera movement.
+homography_points_file: config/homography_points.yaml
+
+ui_refresh_hz: 30
+state_refresh_hz: 10
