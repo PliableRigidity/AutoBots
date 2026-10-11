@@ -5,3 +5,5 @@ logs/*.log
 config/arena_calibration.npz
 config/arena_background.png
 config/arena_background.json
+runs/trajectory_predictor/
+*.pt
